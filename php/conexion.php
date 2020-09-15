@@ -23,55 +23,58 @@ class conexion
         }
     }
 
-private static function conexion(){
-    if(!isset(self::$instancia)){
-        self::$instancia=new conexion;
-    }
-}
-
-private static function prepare($sql){
-    return self::$instancia->con->prepare($sql);
-}
-
-public static function edtitar(){
-    self::conexion();
-    $sql="SELECT * FROM listas_reproduccion";
-    try {
-        $resultado=self::prepare($sql);
-        $resultado->execute();
-        $aux=$resultado->fetchAll(PDO::FETCH_ASSOC);
-        if(!empty($aux)){
-            return $aux;
-        }else{
-            return null;
+    private static function conexion()
+    {
+        if (!isset(self::$instancia)) {
+            self::$instancia = new conexion;
         }
-    } catch (PDOException $ex) {
-        echo "Error en la conexión " . $ex->getMessage();
     }
-}
 
-public static function videos($id_lista){
+    private static function prepare($sql)
+    {
+        return self::$instancia->con->prepare($sql);
+    }
 
-    self::conexion();
-    $sql="SELECT * FROM videos where id_lista= ?";
-    
-    try {
-        //llamamos a la preparacion de la consulta 
-        $resultado=self::prepare($sql);
-        //introducimos los correspondientes parametros de la consulta
-        $resultado->bindParam(1,$id_lista);
-        $resultado->execute();
-        $aux= $resultado->fetchAll(PDO::FETCH_ASSOC);
-        if(!empty($aux)){
-            return $aux;
-        }else{
-            return null;
+    public static function edtitar()
+    {
+        self::conexion();
+        $sql = "SELECT * FROM listas_reproduccion";
+        try {
+            $resultado = self::prepare($sql);
+            $resultado->execute();
+            $aux = $resultado->fetchAll(PDO::FETCH_ASSOC);
+            if (!empty($aux)) {
+                return $aux;
+            } else {
+                return null;
+            }
+        } catch (PDOException $ex) {
+            echo "Error en la conexión " . $ex->getMessage();
         }
-    } catch (PDOException $e) {
-        echo "Error en la conexión " . $e->getMessage();
     }
-}
-  
+
+    public static function videos($id_lista)
+    {
+
+        self::conexion();
+        $sql = "SELECT * FROM videos where id_lista= ?";
+
+        try {
+            //llamamos a la preparacion de la consulta 
+            $resultado = self::prepare($sql);
+            //introducimos los correspondientes parametros de la consulta
+            $resultado->bindParam(1, $id_lista);
+            $resultado->execute();
+            $aux = $resultado->fetchAll(PDO::FETCH_ASSOC);
+            if (!empty($aux)) {
+                return $aux;
+            } else {
+                return null;
+            }
+        } catch (PDOException $e) {
+            echo "Error en la conexión " . $e->getMessage();
+        }
+    }
 }
 
 /*

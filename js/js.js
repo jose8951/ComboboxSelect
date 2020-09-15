@@ -1,9 +1,6 @@
 $(function () {
     mostrarCombo();
-
-enviar();
-
-
+    enviar();
 })
 
 function mostrarCombo() {
@@ -37,13 +34,13 @@ function mostrarCombo() {
             data: parametros,
             success: function (videos) {
                 videos = $.parseJSON(videos);
-                if(videos){
+                if (videos) {
                     muestraVideos(videos);
-                }else{
+                } else {
                     let resultado = '<option  value="0">No hay videos</option>';
                     $('#videos').html(resultado);
                 }
-                
+
             },
             error: function (xhr, status) {
                 alert("disculpel, existio un problema");
@@ -53,33 +50,33 @@ function mostrarCombo() {
 
 
 
-   
+
 }
 
-function enviar(){
-    $('#enviar').on('click', function(){
-    
-        let resultado='lista de reproducción: ';
-      //  resultado += $('#lista_reproduccion').val();
-      resultado+=$ ('#lista_reproduccion option:selected').text();
+function enviar() {
+    $('#enviar').on('click', function () {
+
+        let resultado = 'lista de reproducción: ';
+        //  resultado += $('#lista_reproduccion').val();
+        resultado += $('#lista_reproduccion option:selected').text();
         resultado += ' - video elegido: ';
-      //  resultado+= $('#videos').val();
-        resultado+= $('#videos option:selected').text();
-       $('#resultado1').html(resultado);
+        //  resultado+= $('#videos').val();
+        resultado += $('#videos option:selected').text();
+        $('#resultado1').html(resultado);
     })
 
 
-/*
- $(document).on('click', '#enviar', function() {
-         alert("dentro enviar");
-    });
-*/
+    /*
+     $(document).on('click', '#enviar', function() {
+             alert("dentro enviar");
+        });
+    */
 }
 
 function muestraVideos(videos) {
     let resultado = '<option value="0">Elige un video</option>';
     videos.forEach(function (element) {
-        resultado+= '<option value='+element.id+'>'+element.nombre +'</option>';
+        resultado += '<option value=' + element.id + '>' + element.nombre + '</option>';
     });
 
     $('#videos').html(resultado);
